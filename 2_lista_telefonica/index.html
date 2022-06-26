@@ -27,6 +27,12 @@
     .form-control {
       margin-bottom: 5px;
     }
+    .selecionado {
+      background-color: yellow;
+    }
+    .negrito {
+      font-weight: bold;
+    }
   </style>
   <script src="lib/angular/angular.js"></script>
   <script>
@@ -34,9 +40,9 @@
     angular.module("listaTelefonica").controller("listaTelefonicaController", ($scope) => {
       $scope.app = "Lista Telefônica";
       $scope.contatos = [
-        { nome: "Eric", telefone: "999999992", operadora: { nome: "Oi", codigo: 14 } },
-        { nome: "Thamiris", telefone: "997777992", operadora: { nome: "Vivo", codigo: 15 } },
-        { nome: "Rebecca", telefone: "994332992", operadora: { nome: "Tim", codigo: 41 } }
+        { nome: "Eric", telefone: "999999992", operadora: { nome: "Oi", codigo: 14, categoria: "Celular" } },
+        { nome: "Thamiris", telefone: "997777992", operadora: { nome: "Vivo", codigo: 15, categoria: "Celular" } },
+        { nome: "Rebecca", telefone: "994332992", operadora: { nome: "Tim", codigo: 41, categoria: "Celular" } }
       ];
       $scope.operadoras = [
         { nome: "Oi", codigo: 14, categoria: "Celular" },
@@ -60,11 +66,13 @@
 
     <table class="table table-striped">
       <tr>
+        <th></th>
         <th>Nome</th>
         <th>Telefone</th>
         <th>Operadora</th>
       </tr>
-      <tr ng-repeat="contato in contatos">
+      <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos">
+        <td><input type="checkbox" ng-model="contato.selecionado"></td>
         <td>{{ contato.nome }}</td>
         <td>{{ contato.telefone }}</td>
         <td>{{ contato.operadora.nome }}</td>
