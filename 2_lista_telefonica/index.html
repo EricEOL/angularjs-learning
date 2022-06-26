@@ -69,6 +69,7 @@
     <button 
       class="btn btn-primary" 
       ng-click="adicionarContato(contato)"
+      ng-disabled="!contato.nome || !contato.telefone"
     >
       Adicionar Contato
     </button>
