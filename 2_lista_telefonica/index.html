@@ -34,9 +34,16 @@
     angular.module("listaTelefonica").controller("listaTelefonicaController", ($scope) => {
       $scope.app = "Lista Telefônica";
       $scope.contatos = [
-        { nome: "Eric", telefone: "999999992" },
-        { nome: "Thamiris", telefone: "997777992" },
-        { nome: "Rebecca", telefone: "994332992" }
+        { nome: "Eric", telefone: "999999992", operadora: { nome: "Oi", codigo: 14 } },
+        { nome: "Thamiris", telefone: "997777992", operadora: { nome: "Vivo", codigo: 15 } },
+        { nome: "Rebecca", telefone: "994332992", operadora: { nome: "Tim", codigo: 41 } }
+      ];
+      $scope.operadoras = [
+        { nome: "Oi", codigo: 14, categoria: "Celular" },
+        { nome: "Vivo", codigo: 15, categoria: "Celular" },
+        { nome: "Tim", codigo: 41, categoria: "Celular" },
+        { nome: "GVT", codigo: 25, categoria: "Fixo" },
+        { nome: "Embratel", codigo: 21, categoria: "Fixo" }
       ];
       $scope.adicionarContato = (contato) => {
         $scope.contatos.push(angular.copy(contato));
@@ -55,10 +62,12 @@
       <tr>
         <th>Nome</th>
         <th>Telefone</th>
+        <th>Operadora</th>
       </tr>
       <tr ng-repeat="contato in contatos">
         <td>{{ contato.nome }}</td>
         <td>{{ contato.telefone }}</td>
+        <td>{{ contato.operadora.nome }}</td>
       </tr>
     </table>
 
@@ -66,11 +75,11 @@
 
     <input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome">
     <input class="form-control" type="text" ng-model="contato.telefone" placeholder="Telefone">
-    <button 
-      class="btn btn-primary" 
-      ng-click="adicionarContato(contato)"
-      ng-disabled="!contato.nome || !contato.telefone"
-    >
+    <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
+      <option value="">Selecione uma operadora</option>
+    </select>
+    <button class="btn btn-primary" ng-click="adicionarContato(contato)"
+      ng-disabled="!contato.nome || !contato.telefone || !contato.operadora">
       Adicionar Contato
     </button>
   </div>
